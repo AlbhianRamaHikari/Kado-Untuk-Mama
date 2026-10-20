@@ -1,0 +1,227 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+
+html,
+body {
+  height: 100vh;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+@keyframes jbFloat {
+
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(var(--rot, 0deg));
+  }
+
+  50% {
+    transform: translate(var(--tx, 12px), var(--ty, -22px)) rotate(calc(var(--rot, 0deg) + 6deg));
+  }
+}
+
+@keyframes jbRise {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes jbPulseRing {
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: .9;
+  }
+
+  50% {
+    transform: scale(1.06);
+    opacity: .4;
+  }
+}
+
+@keyframes jbBubblePop {
+  0% {
+    transform: scale(1.15);
+  }
+
+  40% {
+    transform: scale(.78);
+  }
+
+  100% {
+    transform: scale(.86);
+  }
+}
+
+@keyframes jbNoteIn {
+  from {
+    opacity: 0;
+    transform: scale(.6);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes jbSplash {
+  0% {
+    transform: translate(-50%, -50%) scale(.4);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate(var(--dx, 0), var(--dy, -40px)) scale(1.1);
+    opacity: 0;
+  }
+}
+
+@keyframes jbSquareBurst {
+  0% {
+    transform: translate(-50%, -50%) scale(0.5);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate(var(--dx), var(--dy)) rotate(360deg) scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes jbEnvelopeBurst {
+  0% {
+    transform: translate(-50%, -50%) scale(0.2) rotate(0deg);
+    opacity: 1;
+  }
+
+  35% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy) + 60px)) scale(0.9) rotate(var(--rot, 180deg));
+    opacity: 0;
+  }
+}
+
+@keyframes jbFall {
+  0% {
+    transform: translate(0, 0) rotate(0);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate(var(--dx, 0), 90vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+.jb-pulse {
+  position: relative;
+  display: inline-block;
+}
+
+.jb-pulse::after {
+  content: "";
+  position: absolute;
+  inset: -2px -4px;
+  border-radius: 6px;
+  border: 1.5px solid rgba(232, 51, 109, .4);
+  animation: jbPulseRing 1.8s ease-in-out infinite;
+}
+
+.jb-bubble-popped {
+  animation: jbBubblePop 380ms cubic-bezier(.34, 1.56, .64, 1);
+}
+
+.jb-bubble-popped>span {
+  animation: jbNoteIn 280ms ease 120ms both;
+}
+
+.jb-toolbar-btn {
+  appearance: none;
+  border: none;
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: background 200ms ease, color 200ms ease;
+  padding: 0;
+}
+
+.jb-ghost-btn {
+  appearance: none;
+  padding: 10px 16px;
+  border-radius: 999px;
+  font: 600 13px/1 "Plus Jakarta Sans", sans-serif;
+  letter-spacing: .02em;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: opacity 200ms ease, transform 200ms ease, background 200ms ease;
+}
+
+.jb-ghost-btn:active {
+  transform: translateY(1px);
+}
+
+@media (max-width:640px) {
+  .jb-letter {
+    padding: 36px 26px 44px !important;
+  }
+
+  .jb-letter-lines {
+    display: none !important;
+  }
+
+  .jb-bw-grid {
+    grid-template-columns: repeat(5, 1fr) !important;
+    gap: 8px !important;
+    padding: 10px !important;
+  }
+
+  .jb-envelope-name {
+    font-size: 22px !important;
+  }
+
+  .jb-stamp {
+    width: 52px !important;
+    height: 64px !important;
+    font-size: 22px !important;
+  }
+}
+
+.envelope-container {
+  perspective: 1400px;
+  touch-action: none;
+}
+
+.envelope-box {
+  transform-style: preserve-3d;
+}
+
+.envelope-flap {
+  transform-origin: top center;
+  transition: transform 350ms cubic-bezier(.22, 1, .36, 1);
+}
+
+.envelope-open .envelope-flap {
+  transform: rotateX(180deg) !important;
+  z-index: 1 !important;
+}
+
+.envelope-open .envelope-seal {
+  opacity: 0 !important;
+  transform: translateX(-50%) scale(0.5) !important;
+}
